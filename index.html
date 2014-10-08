@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Bubble's Fetal Movement Counter</title>
+        <!-- jQuery -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <!-- Moment -->
+        <script src="http://momentjs.com/downloads/moment.min.js"></script>
+        <!-- Bootstrap -->
+        <!-- <link  href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script> -->
+        <!-- Main -->
+        <style>
+            body {
+                margin: 15px;
+                background-image: url(bg.jpg);
+            }
+            .counter {
+                padding: 15px;
+                background-color: rgba(255,255,255,0.9);
+                border-radius: 10px;
+            }
+            .list {
+                height: 280px;
+                overflow: scroll;
+                padding: 15px;
+                margin-bottom: 15px;
+                background-color: rgba(255,255,255,0.9);
+                border-radius: 10px;
+            }
+            .action > button {
+                width: 290px;
+                height: 110px;
+                font-size: 33px;
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="counter">
+            <div>Since: <span id="since"></span></div>
+            <div>Last: <span id="last"></span></div>
+            <div>Amount: <span id="amount_number"></span></div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="list">
+            Logs:<br>
+        </div>
+        <div class="action">
+            <button>Moved</button>
+        </div>
+        <!-- Main -->
+        <script>
+            var counter = 0;
+            var since = new Date;
+            $('#since').html(moment().format('MMM D YYYY, h:mm:ss A'));
+            var showLast = function() {
+                var last = new Date - since;
+                $('#last').html(moment(last).format('mm:ss'));
+                if (last / 1000 >= 60 * 60) {
+                    $('.action > button').attr('disabled', 'disabled');
+                    clearInterval(timer);
+                    alert('Time is up!');
+                }
+            };
+            var timer = setInterval(showLast, 1000);
+            var showCount = function() {
+                $('#amount_number').html(counter);
+                $('.list').html($('.list').html() + 'Moved @ ' + moment().format('mm:ss:SS A') + '<br>');
+                $('.list').scrollTop(1000000);
+            };
+            $('.action > button').click(function() {
+                counter++;
+                showCount();
+            });
+        </script>
+    </body>
+</html>
