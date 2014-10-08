@@ -16,6 +16,7 @@
             body {
                 margin: 15px;
                 background-image: url(bg_1.jpg);
+                background-size: 512px 512px;
             }
             .counter {
                 padding: 15px;
@@ -57,6 +58,7 @@
             var since = new Date;
             if (parseInt(Math.random() * 10) >= 5) {
                 $('body').css('background-image', 'url(bg_2.jpg)');
+                $('body').css('background-size', '500px 500px');
             }
             $('#since').html(moment().format('MMM D YYYY, h:mm:ss A'));
             var showLast = function() {
