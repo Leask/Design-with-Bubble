@@ -15,7 +15,7 @@
         <style>
             body {
                 margin: 15px;
-                background-image: url(bg.jpg);
+                background-image: url(bg_1.jpg);
             }
             .counter {
                 padding: 15px;
@@ -55,6 +55,9 @@
         <script>
             var counter = 0;
             var since = new Date;
+            if (parseInt(Math.random() * 10) >= 5) {
+                $('body').css('background-image', 'url(bg_2.jpg)');
+            }
             $('#since').html(moment().format('MMM D YYYY, h:mm:ss A'));
             var showLast = function() {
                 var last = new Date - since;
