@@ -14,10 +14,25 @@
 		display: block;
 		position: absolute;
 	}
+	#select {
+		display: block;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+	#time {
+		display: block;
+		position: absolute;
+		color: blue;
+		font-size: 50px;
+		left: 10px;
+		top: 10px;
+	}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-	let arrCars = [
+	let carWidth = 0;
+	let arrCars  = [
 		['bus.png'   , 266, 151],
 		['car.png'   , 220, 124],
 		['conv.png'  , 274, 118],
@@ -29,25 +44,47 @@
 		['truck2.png', 216, 143],
 	];
 	let initCar = function() {
-		let cur = arrCars[Math.floor(Math.random() * Object.keys(arrCars).length)];
+		let cur  = arrCars[Math.floor(Math.random() * Object.keys(arrCars).length)];
+		carWidth = cur[2];
 		$('#car').css('width',  cur[1] + 'px');
 		$('#car').css('height', cur[2] + 'px');
 		$('#car').attr('src', './elements/' + cur[0]);
 		$('#car').css('top', ($(window).height() - cur[2] - 70) + 'px');
 	};
 	let moverCar = function() {
-		setInterval(function() {
-			$('#car').css('left', (parseInt($('#car').css('left')) + 1)  + 'px');
-		}, 50);
+		if (!startTime) {
+			return;
+		}
+		let cur = new Date().getTime() - startTime.getTime();
+		if (cur < 0) {
+			return;
+		}
+		$('#car').css('left', ($(window).width() - carWidth) * cur / (~~$('#select').val() * 1000 * 60) + 'px');
 	};
+	let startTime = null;
 	let main = function() {
-		initCar();
-		moverCar();
+		$('#select').on('change', function() {
+			initCar();
+			startTime = new Date();
+		});
+		setInterval(moverCar, 10);
 	};
 	$(main);
 </script>
 </head>
 <body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<select id="select">
+	<option value="5">5</option>
+	<option value="10">10</option>
+	<option value="15">15</option>
+	<option value="20">20</option>
+	<option value="25">25</option>
+	<option value="30">30</option>
+	<option value="35">35</option>
+	<option value="40">40</option>
+</select>
+<div id="time">
+</div>
 <div id="road">
 	<img id="car">
 </div>
